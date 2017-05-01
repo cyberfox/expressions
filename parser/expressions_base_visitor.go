@@ -1,102 +1,183 @@
 // Generated from Expressions.g4 by ANTLR 4.7.
 
 package parser // Expressions
+// See base listener file for example implementations
 
-import "github.com/antlr/antlr4/runtime/Go/antlr"
+//import "github.com/antlr/antlr4/runtime/Go/antlr"
 
-type BaseExpressionsVisitor struct {
-	*antlr.BaseParseTreeVisitor
-	super ExpressionsVisitor
-}
 
-func (v *BaseExpressionsVisitor) SetSuper(newSuper ExpressionsVisitor) {
-	v.super = newSuper
-}
 
-func (v *BaseExpressionsVisitor) DefaultResult() interface{} {
-	return nil
-}
+// import "generate package"
 
-func (v *BaseExpressionsVisitor) ShouldVisitNextChild(node antlr.RuleNode, resultSoFar interface{}) bool {
-	return true
-}
+//type ExpressionsVisitor struct {
+//    *antlr.BaseParseTreeVisitor
+//}
 
-func (v *BaseExpressionsVisitor) AggregateResult(resultSoFar, childResult interface{}) interface{} {
-	return childResult
-}
+//var _ parser.StartContextVisitor = &ExpressionsVisitor{}
+//var _ parser.CodelineContextVisitor = &ExpressionsVisitor{}
+//var _ parser.AddSubExprContextVisitor = &ExpressionsVisitor{}
+//var _ parser.ParenExprContextVisitor = &ExpressionsVisitor{}
+//var _ parser.LiteralExprContextVisitor = &ExpressionsVisitor{}
+//var _ parser.UnaryExprContextVisitor = &ExpressionsVisitor{}
+//var _ parser.UnaryContextVisitor = &ExpressionsVisitor{}
+//var _ parser.IntLiteralContextVisitor = &ExpressionsVisitor{}
 
-func (v *BaseExpressionsVisitor) VisitChildren(node antlr.RuleNode) interface{} {
-	var result interface{} = nil
 
-	if v.super != nil {
-		result = v.super.DefaultResult()
-	}
+//func (v *ExpressionsVisitor) VisitNext(node antlr.Tree, current interface{}) bool {
+//    return true
+//}
+//func (v *ExpressionsVisitor) VisitRest(node antlr.RuleNode, current interface{}) bool {
+//    return true
+//}
+//func (v *ExpressionsVisitor) AggregateResult(aggregate, nextResult interface{}) (result interface{}) {
+//    return nextResult
+//}
+//func (v *ExpressionsVisitor) VisitTerminal(node antlr.TerminalNode) {
+//}
+//func (v *ExpressionsVisitor) VisitErrorNode(node antlr.ErrorNode) {
+//}
 
-	for i := 0; i < node.GetChildCount(); i++ {
-		if v.super != nil {
-			doNextChild := v.super.ShouldVisitNextChild(node, result)
-			if !doNextChild {
-				break
-			}
-		}
+//func (v *ExpressionsVisitor) VisitStart(ctx parser.IStartContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}){
+//  TODO list rules here
+//  Visit rules manually
+//  eg a : b c* | d;
+//  if ctx.GetB() != nil {
+//    result1 = ctx.GetB(ctx, delegate, args)
+//    for _, c := range ctx.GetC() {
+//      resultS = c.GetC(ctx, delegate, args)
+//    }
+//  } else { ... }
+//  OR visit all children rules
+//  // before children
+//  v.VisitChildren(ctx, delegate)
+//  // afer children
+//
+//  return result
+//}
 
-		child := node.GetChild(i)
-		ruleChild, ok := child.(antlr.RuleNode)
-		if !ok {
-			terminalChild, ok := child.(antlr.TerminalNode)
-			if ok {
-				childResult := v.VisitTerminal(terminalChild)
-				if v.super != nil {
-					result = v.super.AggregateResult(result, childResult)
-				} else {
-					result = childResult
-				}
-			} else {
-				errChild, ok := child.(antlr.ErrorNode)
-				if ok {
-					v.VisitErrorNode(errChild)
-				}
-			}
-		} else {
-			if v.super != nil {
-				childResult := ruleChild.Accept(v.super)
-				result = v.super.AggregateResult(result, childResult)
-			} else {
-				result = ruleChild.Accept(v)
-			}
-		}
-	}
-	return result
-}
+//func (v *ExpressionsVisitor) VisitCodeline(ctx parser.ICodelineContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}){
+//  TODO list rules here
+//  Visit rules manually
+//  eg a : b c* | d;
+//  if ctx.GetB() != nil {
+//    result1 = ctx.GetB(ctx, delegate, args)
+//    for _, c := range ctx.GetC() {
+//      resultS = c.GetC(ctx, delegate, args)
+//    }
+//  } else { ... }
+//  OR visit all children rules
+//  // before children
+//  v.VisitChildren(ctx, delegate)
+//  // afer children
+//
+//  return result
+//}
 
-func (v *BaseExpressionsVisitor) VisitStart(ctx *StartContext) interface{} {
-	return v.VisitChildren(ctx)
-}
+//func (v *ExpressionsVisitor) VisitAddSubExpr(ctx parser.IAddSubExprContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}){
+//  TODO list rules here
+//  Visit rules manually
+//  eg a : b c* | d;
+//  if ctx.GetB() != nil {
+//    result1 = ctx.GetB(ctx, delegate, args)
+//    for _, c := range ctx.GetC() {
+//      resultS = c.GetC(ctx, delegate, args)
+//    }
+//  } else { ... }
+//  OR visit all children rules
+//  // before children
+//  v.VisitChildren(ctx, delegate)
+//  // afer children
+//
+//  return result
+//}
 
-func (v *BaseExpressionsVisitor) VisitCodeline(ctx *CodelineContext) interface{} {
-	return v.VisitChildren(ctx)
-}
+//func (v *ExpressionsVisitor) VisitParenExpr(ctx parser.IParenExprContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}){
+//  TODO list rules here
+//  Visit rules manually
+//  eg a : b c* | d;
+//  if ctx.GetB() != nil {
+//    result1 = ctx.GetB(ctx, delegate, args)
+//    for _, c := range ctx.GetC() {
+//      resultS = c.GetC(ctx, delegate, args)
+//    }
+//  } else { ... }
+//  OR visit all children rules
+//  // before children
+//  v.VisitChildren(ctx, delegate)
+//  // afer children
+//
+//  return result
+//}
 
-func (v *BaseExpressionsVisitor) VisitLiteralExpr(ctx *LiteralExprContext) interface{} {
-	return v.VisitChildren(ctx)
-}
+//func (v *ExpressionsVisitor) VisitLiteralExpr(ctx parser.ILiteralExprContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}){
+//  TODO list rules here
+//  Visit rules manually
+//  eg a : b c* | d;
+//  if ctx.GetB() != nil {
+//    result1 = ctx.GetB(ctx, delegate, args)
+//    for _, c := range ctx.GetC() {
+//      resultS = c.GetC(ctx, delegate, args)
+//    }
+//  } else { ... }
+//  OR visit all children rules
+//  // before children
+//  v.VisitChildren(ctx, delegate)
+//  // afer children
+//
+//  return result
+//}
 
-func (v *BaseExpressionsVisitor) VisitParenExpr(ctx *ParenExprContext) interface{} {
-	return v.VisitChildren(ctx)
-}
+//func (v *ExpressionsVisitor) VisitUnaryExpr(ctx parser.IUnaryExprContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}){
+//  TODO list rules here
+//  Visit rules manually
+//  eg a : b c* | d;
+//  if ctx.GetB() != nil {
+//    result1 = ctx.GetB(ctx, delegate, args)
+//    for _, c := range ctx.GetC() {
+//      resultS = c.GetC(ctx, delegate, args)
+//    }
+//  } else { ... }
+//  OR visit all children rules
+//  // before children
+//  v.VisitChildren(ctx, delegate)
+//  // afer children
+//
+//  return result
+//}
 
-func (v *BaseExpressionsVisitor) VisitUnaryExpr(ctx *UnaryExprContext) interface{} {
-	return v.VisitChildren(ctx)
-}
+//func (v *ExpressionsVisitor) VisitUnary(ctx parser.IUnaryContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}){
+//  TODO list rules here
+//  Visit rules manually
+//  eg a : b c* | d;
+//  if ctx.GetB() != nil {
+//    result1 = ctx.GetB(ctx, delegate, args)
+//    for _, c := range ctx.GetC() {
+//      resultS = c.GetC(ctx, delegate, args)
+//    }
+//  } else { ... }
+//  OR visit all children rules
+//  // before children
+//  v.VisitChildren(ctx, delegate)
+//  // afer children
+//
+//  return result
+//}
 
-func (v *BaseExpressionsVisitor) VisitAddSubExpr(ctx *AddSubExprContext) interface{} {
-	return v.VisitChildren(ctx)
-}
+//func (v *ExpressionsVisitor) VisitIntLiteral(ctx parser.IIntLiteralContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}){
+//  TODO list rules here
+//  Visit rules manually
+//  eg a : b c* | d;
+//  if ctx.GetB() != nil {
+//    result1 = ctx.GetB(ctx, delegate, args)
+//    for _, c := range ctx.GetC() {
+//      resultS = c.GetC(ctx, delegate, args)
+//    }
+//  } else { ... }
+//  OR visit all children rules
+//  // before children
+//  v.VisitChildren(ctx, delegate)
+//  // afer children
+//
+//  return result
+//}
 
-func (v *BaseExpressionsVisitor) VisitUnary(ctx *UnaryContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseExpressionsVisitor) VisitIntLiteral(ctx *IntLiteralContext) interface{} {
-	return v.VisitChildren(ctx)
-}

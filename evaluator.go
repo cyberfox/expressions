@@ -1,65 +1,75 @@
 package expressions
 
 import (
-	"github.com/cyberfox/expressions/parser"
 	"strconv"
+
+	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/cyberfox/expressions/parser"
 )
 
 type ExprVisitor struct {
-	parser.BaseExpressionsVisitor
+	*antlr.BaseParseTreeVisitor
 }
 
-func (v *ExprVisitor) VisitIntLiteral(ctx *parser.IntLiteralContext) interface{} {
-	result, err := strconv.ParseInt(ctx.GetText(), 10, 64)
-	if err == nil {
-		return int64(result)
+// var _ parser.StartContextVisitor = &ExprVisitor{}
+// var _ parser.CodelineContextVisitor = &ExprVisitor{}
+var _ parser.AddSubExprContextVisitor = &ExprVisitor{}
+var _ parser.ParenExprContextVisitor = &ExprVisitor{}
+
+// var _ parser.LiteralExprContextVisitor = &ExprVisitor{}
+// var _ parser.UnaryExprContextVisitor = &ExprVisitor{}
+var _ parser.UnaryContextVisitor = &ExprVisitor{}
+var _ parser.IntLiteralContextVisitor = &ExprVisitor{}
+
+func (v *ExprVisitor) VisitIntLiteral(ctx parser.IIntLiteralContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}) {
+	r, err := strconv.ParseInt(ctx.GetText(), 10, 64)
+	if err != nil {
+		return nil
 	}
-	return nil
+	return r
 }
 
-func (v *ExprVisitor) VisitParenExpr(ctx *parser.ParenExprContext) interface{} {
-	return ctx.Expr().Accept(v)
+func (v *ExprVisitor) VisitParenExpr(ctx parser.IParenExprContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}) {
+	result = ctx.GetE().Visit(v)
+	return
 }
 
-func (v *ExprVisitor) VisitAddSubExpr(ctx *parser.AddSubExprContext) interface{} {
+func (v *ExprVisitor) VisitAddSubExpr(ctx parser.IAddSubExprContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}) {
 	op := ctx.GetOp().GetText()
-	left := ctx.GetA().Accept(v)
-	right := ctx.GetB().Accept(v)
+	left := ctx.GetA().Visit(delegate)
+	right := ctx.GetB().Visit(delegate)
 
 	switch left.(type) {
-	default:
-		return nil
 	case int64:
 		if op == "+" {
-			return left.(int64) + right.(int64)
+			result = left.(int64) + right.(int64)
 		} else {
-			return left.(int64) - right.(int64)
+			result = left.(int64) - right.(int64)
 		}
+		// default:
+		// 	return nil
 	}
-
-	return nil
+	return
 }
-
-func (v *ExprVisitor) VisitUnary(ctx *parser.UnaryContext)interface{} {
-	val := ctx.GetVal().Accept(v)
+func (v *ExprVisitor) VisitUnary(ctx parser.IUnaryContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}) {
+	val := ctx.(*parser.UnaryContext).GetVal().Visit(v)
 
 	switch ctx.GetOp().GetText() {
 	case "-":
 		switch val.(type) {
 		case int64:
-			return -val.(int64);
+			result = -val.(int64)
 		}
 	case "~":
 		switch val.(type) {
 		case int64:
-			return ^val.(int64);
+			result = ^val.(int64)
 		}
 	}
-	return nil;
+	return
 }
 
 func NewEvaluator() *ExprVisitor {
 	visitor := new(ExprVisitor)
-	visitor.SetSuper(visitor)
 	return visitor
 }

@@ -5,7 +5,7 @@ start : (codeline NEWLINE+)+ EOF ;
 codeline : label=ID ':' code=expr ;
 
 expr
-    : '(' expr ')'                 #ParenExpr
+    : '(' e=expr ')'                 #ParenExpr
     | unary                        #UnaryExpr
     | a=expr op=(ADD|SUB) b=expr   #AddSubExpr
     | literal                      #LiteralExpr

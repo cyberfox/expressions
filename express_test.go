@@ -15,7 +15,7 @@ func TestExpressions(t *testing.T) {
 func TestEvaluation(t *testing.T) {
 	expr := NewEvaluator()
 	all := GetExpressions("expressions.txt")
-	result := all["example"].Accept(expr)
+	result := all["example"].Visit(expr)
 	expected := int64(1 + (10 - 1) + -5)
 
 	if result != expected {

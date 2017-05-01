@@ -1,26 +1,26 @@
 package expressions
 
 import (
-	"github.com/cyberfox/expressions/parser"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/cyberfox/expressions/parser"
 )
 
 type ExpressionsVisitor struct {
-	parser.BaseExpressionsVisitor
+	*antlr.BaseParseTreeVisitor
 	Expressions map[string]parser.IExprContext
 }
 
+var _ parser.CodelineContextVisitor = &ExpressionsVisitor{}
+
 func NewExpressionsVisitor() *ExpressionsVisitor {
 	visitor := new(ExpressionsVisitor)
-	visitor.SetSuper(visitor)
 	visitor.Expressions = make(map[string]parser.IExprContext)
-
 	return visitor
 }
 
-func (ev *ExpressionsVisitor) VisitCodeline(ctx *parser.CodelineContext) interface{} {
-	ev.Expressions[ctx.GetLabel().GetText()] = ctx.GetCode()
-
+func (ev *ExpressionsVisitor) VisitCodeline(ctx parser.ICodelineContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}) {
+	//func (ev *ExpressionsVisitor) VisitCodeline(ctx *parser.CodelineContext) interface{} {
+	ev.Expressions[ctx.(*parser.CodelineContext).GetLabel().GetText()] = ctx.(*parser.CodelineContext).GetCode()
 	return nil
 }
 
@@ -32,7 +32,7 @@ func GetExpressions(filename string) map[string]parser.IExprContext {
 	tree := p.Start()
 
 	tv := NewExpressionsVisitor()
-	tree.Accept(tv)
+	tree.Visit(tv)
 
 	return tv.Expressions
 }
