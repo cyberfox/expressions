@@ -1,7 +1,7 @@
 package expressions
 
 import (
-	"github.com/cyberfox/expressions/parser"
+	"github.com/millergarym/expressions/parser"
 	"github.com/wxio/antlr4-go"
 )
 

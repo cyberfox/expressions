@@ -3,7 +3,7 @@ package expressions
 import (
 	"strconv"
 
-	"github.com/cyberfox/expressions/parser"
+	"github.com/millergarym/expressions/parser"
 	"github.com/wxio/antlr4-go"
 )
 
