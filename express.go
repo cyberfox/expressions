@@ -1,8 +1,8 @@
 package expressions
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/cyberfox/expressions/parser"
+	"github.com/wxio/antlr4-go"
 )
 
 type ExpressionsVisitor struct {

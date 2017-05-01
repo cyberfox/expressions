@@ -1,5 +1,10 @@
 grammar Expressions;
 
+options {
+  language = Go;
+  runtimeImport = 'github.com/wxio/antlr4-go';
+}
+
 start : (codeline NEWLINE+)+ EOF ;
 
 codeline : label=ID ':' code=expr ;
