@@ -2,7 +2,7 @@ grammar Expressions;
 
 options {
   language = Go;
-  runtimeImport = 'github.com/wxio/antlr4-go';
+  runtimeImport = 'github.com/wxio/antlr4/runtime/Go/antlr';
 }
 
 start : (codeline NEWLINE+)+ EOF ;

@@ -1,8 +1,8 @@
 package expressions
 
 import (
-	"github.com/millergarym/expressions/parser"
-	"github.com/wxio/antlr4-go"
+	"github.com/cyberfox/expressions/parser"
+	"github.com/wxio/antlr4/runtime/Go/antlr"
 )
 
 type ExpressionsVisitor struct {
@@ -25,7 +25,7 @@ func (ev *ExpressionsVisitor) VisitCodeline(ctx parser.ICodelineContext, delegat
 }
 
 func GetExpressions(filename string) map[string]parser.IExprContext {
-	input := antlr.NewFileStream(filename)
+	input, _ := antlr.NewFileStream(filename)
 	lexer := parser.NewExpressionsLexer(input)
 	stream := antlr.NewCommonTokenStream(lexer, 0)
 	p := parser.NewExpressionsParser(stream)

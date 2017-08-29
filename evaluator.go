@@ -3,8 +3,8 @@ package expressions
 import (
 	"strconv"
 
-	"github.com/millergarym/expressions/parser"
-	"github.com/wxio/antlr4-go"
+	"github.com/cyberfox/expressions/parser"
+	"github.com/wxio/antlr4/runtime/Go/antlr"
 )
 
 type ExprVisitor struct {

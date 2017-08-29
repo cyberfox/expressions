@@ -22,3 +22,14 @@ func TestEvaluation(t *testing.T) {
 		t.Errorf("Expected %d, got %d.", expected, result)
 	}
 }
+
+func TestSecondExpression(t *testing.T) {
+	expr := NewEvaluator()
+	all := GetExpressions("expressions.txt")
+	result := all["second"].Visit(expr)
+	expected := int64(-1)
+
+	if result != expected {
+		t.Errorf("Expected %d, got %d.", expected, result)
+	}
+}
