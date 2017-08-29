@@ -18,7 +18,7 @@ var _ parser.ParenExprContextVisitor = &ExprVisitor{}
 
 // var _ parser.LiteralExprContextVisitor = &ExprVisitor{}
 // var _ parser.UnaryExprContextVisitor = &ExprVisitor{}
-var _ parser.UnaryContextVisitor = &ExprVisitor{}
+// var _ parser.UnaryContextVisitor = &ExprVisitor{}
 var _ parser.IntLiteralContextVisitor = &ExprVisitor{}
 
 func (v *ExprVisitor) VisitIntLiteral(ctx parser.IIntLiteralContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}) {
@@ -51,21 +51,16 @@ func (v *ExprVisitor) VisitAddSubExpr(ctx parser.IAddSubExprContext, delegate an
 	}
 	return
 }
-func (v *ExprVisitor) VisitUnary(ctx parser.IUnaryContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}) {
-	val := ctx.(*parser.UnaryContext).GetVal().Visit(v)
 
-	switch ctx.GetOp().GetText() {
-	case "-":
-		switch val.(type) {
-		case int64:
-			result = -val.(int64)
-		}
-	case "~":
-		switch val.(type) {
-		case int64:
-			result = ^val.(int64)
-		}
-	}
+func (v *ExprVisitor) VisitNegateExpr(ctx parser.INegateExprContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}) {
+	val := ctx.GetVal().Visit(v)
+	result = -val.(int64)
+	return
+}
+
+func (v *ExprVisitor) VisitInvertExpr(ctx parser.IInvertExprContext, delegate antlr.ParseTreeVisitor, args ...interface{}) (result interface{}) {
+	val := ctx.GetVal().Visit(v)
+	result = ^val.(int64)
 	return
 }
 

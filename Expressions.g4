@@ -10,15 +10,11 @@ start : (codeline NEWLINE+)+ EOF ;
 codeline : label=ID ':' code=expr ;
 
 expr
-    : '(' e=expr ')'                 #ParenExpr
-    | unary                        #UnaryExpr
+    : '(' e=expr ')'               #ParenExpr
+    | op=SUB val=expr              #NegateExpr
+    | op=INV val=expr              #InvertExpr
     | a=expr op=(ADD|SUB) b=expr   #AddSubExpr
     | literal                      #LiteralExpr
-    ;
-
-unary
-    : op=SUB val=expr
-    | op=INV val=expr
     ;
 
 literal
